@@ -42,9 +42,11 @@ String s = null;
                                 comando = "dpkg --get-selections";
 
                         // Comando para Windows
-                        else
-                                comando = "cmd /c ipconfig";
-
+                        else{
+                                
+                         
+                            comando = "cmd /c wmic product get name";
+                        }
                         // Ejcutamos el comando
                         Process p = Runtime.getRuntime().exec(comando);
 
@@ -59,16 +61,20 @@ String s = null;
                         while ((s = stdInput.readLine()) != null) {
                           
                             Programasinstalados.add(s);
+                        
+                         
+                            
                              size=Programasinstalados.size();
                         }
                             System.out.println(""+size);
                             for(int x=0;x<size;x++){
-                                System.out.println(""+ Programasinstalados.get(x));
+                      JOptionPane.showMessageDialog(null,""+Programasinstalados.get(x));
                             }
                         // Leemos los errores si los hubiera
+                        
                         System.out.println("Ésta es la salida standard de error del comando (si la hay):\n");
                         while ((s = stdError.readLine()) != null) {
-                                System.out.println(s);
+                     
                         }
 
                         System.exit(0);
