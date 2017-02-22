@@ -37,7 +37,6 @@ public class prueba extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,39 +44,34 @@ public class prueba extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Listar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jButton1)
+                .addGap(161, 161, 161))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addGap(169, 169, 169)
+                .addComponent(jButton1)
                 .addContainerGap(102, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         pack();
@@ -85,69 +79,74 @@ public class prueba extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       String s = null;
-       boolean r =true;
+        String s = null;
+        String a=null;
+        int size = 0;
+        ArrayList<String> Programasinstalados = new ArrayList<String>();
+      try {
 
-    int size = 0;
-    ArrayList<String> Programasinstalados = new ArrayList<String>();
-  try {
-            
-                        // Determinar en qué SO estamos
-                        String so = System.getProperty("os.name");
+                            // Determinar en qué SO estamos
+                            String so = System.getProperty("os.name");
 
-                        String comando;
+                            String comando;
 
-                        // Comando para Linux
-                        if (so.equals("Linux"))
-                                comando = "dpkg --get-selections";
+                            // Comando para Linux
+                            if (so.equals("Linux")){
+                                    comando = "dpkg --get-selections";
+                                    Process p = Runtime.getRuntime().exec(comando);
 
-                        // Comando para Windows
-                        else{
-                                
-                         
-                            comando = "cmd /c wmic product get name";
-                        }
-                        // Ejcutamos el comando
-                        Process p = Runtime.getRuntime().exec(comando);
+                            BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+                                            p.getInputStream()));
 
-                        BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-                                        p.getInputStream()));
+                            BufferedReader stdError = new BufferedReader(new InputStreamReader(
+                                            p.getErrorStream()));
 
-                        BufferedReader stdError = new BufferedReader(new InputStreamReader(
-                                        p.getErrorStream()));
+                            while ((s = stdInput.readLine()) != null) {
 
-                        // Leemos la salida del comando
-                        //System.out.println("Ésta es la salida standard del comando:\n");
-                        while ((s = stdInput.readLine()) != null) {
-                          
-                            Programasinstalados.add(s);
-                        
-                            r=Programasinstalados.isEmpty();
-                            
-                             size=Programasinstalados.size();
-                        }
-                            System.out.println(""+size);
-                       
-                            for(int x=0;x<5;x++){
-                            jTextArea1.append(Programasinstalados.get(x));
-                              
+                                Programasinstalados.add(s.trim());
+                                size=Programasinstalados.size();
                             }
-                        
-                          System.out.println(""+r);
-                          
-                        // Leemos los errores si los hubiera
-                        
-                        System.out.println("Ésta es la salida standard de error del comando (si la hay):\n");
-                        while ((s = stdError.readLine()) != null) {
-                     
-                        }
+                                System.out.println(""+size);
+                                for(int x=0;x<size;x++){
+                                jTextArea1.append(Programasinstalados.get(x));
+                                jTextArea1.setLineWrap(true);
+                                jTextArea1.setWrapStyleWord(true);
+                                }
+                            }
+                            else{
 
-                        System.exit(0);
-                } catch (IOException e) {
-                        System.out.println("Excepción: ");
-                        e.printStackTrace();
-                        System.exit(-1);
-                }
+
+                                comando = "cmd /c wmic product get name";
+                                Process p = Runtime.getRuntime().exec(comando);
+
+                            BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+                                            p.getInputStream()));
+
+                            BufferedReader stdError = new BufferedReader(new InputStreamReader(
+                                            p.getErrorStream()));
+
+                            while ((s = stdInput.readLine()) != null) {
+
+                                Programasinstalados.add(s);
+                                size=Programasinstalados.size();
+                            }
+                                System.out.println(""+size);
+                                for(int x=0;x<size;x++){
+                           jTextArea1.append(Programasinstalados.get(x));
+                           jTextArea1.setLineWrap(true);
+                           jTextArea1.setWrapStyleWord(true);
+                      
+                                }
+                            }
+                   
+
+                           
+                    } catch (IOException e) {
+                            System.out.println("Excepción: ");
+                            e.printStackTrace();
+                            System.exit(-1);
+                    }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -188,7 +187,6 @@ public class prueba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
