@@ -25,6 +25,7 @@ public abstract class CrearJframe {
        frame = new JFrame(titulo); 
        frame.setSize(ancho,alto);
        frame.setLocationRelativeTo(null);
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        frame.setLayout(null);
        
     }
