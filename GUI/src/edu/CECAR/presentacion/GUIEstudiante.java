@@ -11,6 +11,7 @@ import edu.CECAR.componentesReutilizables.CrearJframe;
 public class  GUIEstudiante extends  CrearJframe{
 
     public GUIEstudiante() {
+        super("Analisis y diseño",400,200);
         mostrarJFrame();
     }
    public static void main(String[] args) {
