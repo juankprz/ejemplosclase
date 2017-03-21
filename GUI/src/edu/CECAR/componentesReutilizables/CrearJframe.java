@@ -1,5 +1,6 @@
 package edu.CECAR.componentesReutilizables;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
@@ -26,6 +27,7 @@ public abstract class CrearJframe {
        frame.setSize(ancho,alto);
        frame.setLocationRelativeTo(null);
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame.getContentPane().setBackground(Color.cyan);
        frame.setLayout(null);
        
     }
